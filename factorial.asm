@@ -1,4 +1,4 @@
-; nasm -felf32 factorial.S -o factorial.o
+; nasm -felf32 factorial.asm -o factorial.o
 ; ld -melf_i386 factorial.o -o factorial
 
 global  _start
