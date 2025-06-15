@@ -12,6 +12,7 @@ section .text
 ;
 ; returns the factorial
 factorial:
+    push    edi
     mov     eax, 1
 .loop:
     cmp     edi, 1
@@ -20,12 +21,14 @@ factorial:
     dec     edi
     jmp     .loop
 .end:
+    pop     edi
     ret
 
 ; @edi - buffer to reverse
 ; @esi - length of buffer
 reverse_bytes:
     push    ebx
+    push    edi
     lea     eax, [edi + esi - 1]    ; buffer end
 .loop:
     cmp     edi, eax
@@ -40,6 +43,7 @@ reverse_bytes:
 
     jmp     .loop
 .end:
+    pop     edi
     pop     ebx
     ret
 
@@ -51,6 +55,8 @@ reverse_bytes:
 ; returns the number of bytes written
 parse_int:
     push    ebx
+    push    esi
+    push    edi
     mov     eax, edi    ; move number, use @edi as counter
     push    ebp
     mov     ebp, edx    ; move length, use @edx for remainder
@@ -82,8 +88,10 @@ parse_int:
     call    reverse_bytes
 
     mov     eax, ebp
-    pop     ebx
     pop     ebp
+    pop     edi
+    pop     esi
+    pop     ebx
     ret
 
 _start:
